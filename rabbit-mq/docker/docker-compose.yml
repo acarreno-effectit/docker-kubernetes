@@ -1,15 +1,16 @@
-version: "3.7"
+version: "3.8"
+name: rabbitmq
 services:
   rabbitmq:
-    image: rabbitmq:3.8.9-management
+    image: rabbitmq:latest
     restart: unless-stopped
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - 5672:5672
+      - 15672:15672
     environment:
-      - "RABBITMQ_DEFAULT_USER=admin"
-      - "RABBITMQ_DEFAULT_PASS=Test123*"
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: Test123*
     networks:
-      - "my-net"
+      - rabbitmq-net
 networks:
-  my-net:
+  rabbitmq-net:

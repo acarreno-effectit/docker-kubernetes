@@ -14,11 +14,11 @@ services:
     volumes:
       - sonarqube:/opt/sonarqube
     ports:
-      - "9000:9000"
+      - 9000:9000
     networks:
-      - "sonarqube-net"
+      - sonarqube-net
   postgres-db:
-    image: postgres:13
+    image: postgres:latest
     hostname: postgres
     container_name: postgres
     environment:
@@ -28,9 +28,9 @@ services:
     volumes:
       - postgres:/var/lib/postgresql
     ports:
-      - "5432:5432"
+      - 5432:5432
     networks:
-      - "sonarqube-net"
+      - sonarqube-net
 volumes:
   sonarqube:
   postgres:
