@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  redis:
+    image: redis
+    hostname: redis-server
+    container_name: redis-server
+    command: redis-server --requirepass Test123* # This is my Redis Server Password
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data::/data
+      - redis-conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - "redis-net"
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    hostname: redis-portal
+    container_name: redis-portal
+    ports:
+      - "8001:8001"
+    volumes:
+      - redis-portal:/db
+    networks:
+      - "redis-net"
+volumes:
+  redis-data:
+  redis-conf:
+  redis-portal:
+networks:
+  redis-net:
