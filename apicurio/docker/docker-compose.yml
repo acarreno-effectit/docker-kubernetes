@@ -1,16 +1,29 @@
-version: '3.1'
+version: "3.8"
+name: apicurio
 services:
   postgres:
-    image: postgres
+    image: postgres:latest
     environment:
       POSTGRES_USER: apicurio-registry
-      POSTGRES_PASSWORD: password
-  app:
+      POSTGRES_PASSWORD: Test123*
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    networks:
+      - apicurio-net
+  apicurio-server:
     image: apicurio/apicurio-registry-sql:2.4.1.Final
     ports:
       - 8080:8080
       - 8091:8091
     environment:
-      REGISTRY_DATASOURCE_URL: 'jdbc:postgresql://postgres/apicurio-registry'
+      REGISTRY_DATASOURCE_URL: jdbc:postgresql://postgres:5432/apicurio-registry
       REGISTRY_DATASOURCE_USERNAME: apicurio-registry
-      REGISTRY_DATASOURCE_PASSWORD: password
+      REGISTRY_DATASOURCE_PASSWORD: Test123*
+    networks:
+      - apicurio-net
+volumes:
+  postgres-data:
+networks:
+  sonarqube-net:
