@@ -6,10 +6,11 @@ services:
     hostname: keycloak-server
     container_name: keycloak-server
     depends_on:
-      - sql-db
+      - ms-sql
+      - mssqlscripts
     environment:
       DB_VENDOR: mssql
-      DB_ADDR: sql-db
+      DB_ADDR: ms-sql
       DB_PORT: 1433
       DB_USER: sa
       DB_PASSWORD: Test123*
@@ -20,11 +21,11 @@ services:
       - 9090:8080
     networks:
       - keycloak-net
-  sql-db:
+  ms-sql:
     image: mcr.microsoft.com/mssql/server:latest
     user: root
-    hostname: sql-db
-    container_name: sql-db
+    hostname: ms-sql
+    container_name: ms-sql
     restart: unless-stopped
     ports:
       - 1433:1433
@@ -36,7 +37,17 @@ services:
       - keycloak-mssql-server-data:/var/opt/mssql/data
     networks:
       - keycloak-net
+  mssqlscripts:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - ms-sql
+    command: /bin/bash -c 'until /opt/mssql-tools/bin/sqlcmd -S ms-sql -U sa -P "Test123*" -Q "CREATE DATABASE Keycloak"; do sleep 5; done'
+    networks:
+      - keycloak-net
 volumes:
   keycloak-mssql-server-data:
 networks:
   keycloak-net:
+# NOTE: Run the following command to up all service and when the database 'Keycloak' was created 
+# delete the service 'mssqlscripts' because isn't necesary to keep:
+# docker-compose up -d && sleep 20 && docker-compose rm mssqlscripts -f
