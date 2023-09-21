@@ -6,8 +6,13 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: Test123*
+      MYSQL_DATABASE: TestDB
+      MYSQL_USER: TestUser
+      MYSQL_PASSWORD: TestUserPassword123*
     volumes:
       - mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
     networks:
       - mysql_net
 volumes:
