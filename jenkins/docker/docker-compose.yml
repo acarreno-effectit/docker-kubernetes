@@ -1,0 +1,43 @@
+version: "3.8"
+name: jenkins
+services:
+  jenkins-server:
+    container_name: jenkins-server
+    image: jenkinsci/jenkins
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    networks:
+      - jenkins_net
+  gitlab:
+    container_name: gitlab
+    hostname: gitlab.agelvis87.com
+    image: gitlab/gitlab-ce:latest
+    ports:
+      - 443:443
+      - 80:80
+    restart: always
+    volumes:
+      - gitlab_config:/etc/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_data:/var/opt/gitlab
+    networks:
+      - jenkins_net
+  mysql-db:
+    container_name: mysql-db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Test123*
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - jenkins_net
+volumes:
+  jenkins_home:
+  mysql-data:
+  gitlab_config:
+  gitlab_logs:
+  gitlab_data:
+networks:
+  jenkins_net:
