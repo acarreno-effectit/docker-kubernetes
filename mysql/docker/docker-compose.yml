@@ -2,8 +2,9 @@ version: "3.8"
 name: mysql
 services:
   mysql-db:
-    container_name: mysql-db
     image: mysql:latest
+    hostname: mysql-server
+    container_name: mysql-server
     environment:
       MYSQL_ROOT_PASSWORD: Test123*
       MYSQL_DATABASE: TestDB

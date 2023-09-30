@@ -3,6 +3,7 @@ name: jenkins
 services:
   jenkins-server:
     container_name: jenkins-server
+    hostname: jenkins-server
     image: jenkinsci/jenkins
     ports:
       - 8080:8080

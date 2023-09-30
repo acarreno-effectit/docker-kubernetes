@@ -1,8 +1,10 @@
 version: "3.8"
-name: rabbitmq
+name: rabbitmq-server
 services:
   rabbitmq:
     image: rabbitmq:latest
+    hostname: rabbitmq-server
+    container_name: rabbitmq-server
     restart: unless-stopped
     ports:
       - 5672:5672

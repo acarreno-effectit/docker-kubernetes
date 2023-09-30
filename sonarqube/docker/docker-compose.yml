@@ -3,8 +3,8 @@ name: sonarqube
 services:
   sonarqube:
     image: sonarqube:community
-    hostname: sonarqube
-    container_name: sonarqube
+    hostname: sonarqube-server
+    container_name: sonarqube-server
     depends_on:
       - postgres-db
     environment:

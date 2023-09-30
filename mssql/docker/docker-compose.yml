@@ -3,6 +3,8 @@ name: mssql-server
 services:
   sql:
     image: mcr.microsoft.com/mssql/server:latest
+    hostname: mssql-server
+    container_name: mssql-server
     user: root
     restart: unless-stopped
     ports:

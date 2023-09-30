@@ -6,7 +6,7 @@ services:
     hostname: keycloak-server
     container_name: keycloak-server
     depends_on:
-      - ms-sql
+      - mssql-server
       - mssqlscripts
     environment:
       DB_VENDOR: mssql
@@ -21,11 +21,11 @@ services:
       - 9090:8080
     networks:
       - keycloak-net
-  ms-sql:
+  mssql-server:
     image: mcr.microsoft.com/mssql/server:latest
     user: root
-    hostname: ms-sql
-    container_name: ms-sql
+    hostname: mssql-server
+    container_name: mssql-server
     restart: unless-stopped
     ports:
       - 1433:1433
